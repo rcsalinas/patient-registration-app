@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # Backend Service (Our NodeJS App)
+  backend:
+    build: ./backend # Specifies to build the image from the ./backend/Dockerfile
+    ports:
+      - "3001:3001" # Maps host port 3001 to container port 3001
+    volumes:
+      # Mounts the uploads folder to persist uploaded images on the host machine
+      - ./backend/public/uploads:/usr/src/app/public/uploads
+    env_file:
+      # Loads environment variables from the .env file in the backend directory
+      - ./backend/.env
+    depends_on:
+      - postgres-db # Ensures the database starts before the backend
+    restart: unless-stopped
+
+  # Database Service (PostgreSQL)
+  postgres-db:
+    image: postgres:14-alpine
+    container_name: postgres-db # The hostname our backend connects to
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin # Must match the password in your backend's db.ts
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432" # Maps host port 5432 to container port 5432
+    volumes:
+      # Persists database data on the host machine
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  # Defines the named volume for data persistence
+  postgres_data:
