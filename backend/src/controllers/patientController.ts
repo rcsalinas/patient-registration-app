@@ -7,7 +7,10 @@ import { sendRegistrationConfirmation } from '../services/emailService';
  * Handles the registration of a new patient.
  * It validates input, saves data to the database, and triggers a confirmation email.
  */
-export const registerPatient = async (req: Request, res: Response): Promise<void> => {
+export const registerPatient = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   // 1. Validate form fields from the request body using Joi schema
   const { error, value } = patientSchema.validate(req.body);
   if (error) {
@@ -26,9 +29,14 @@ export const registerPatient = async (req: Request, res: Response): Promise<void
 
   try {
     // 3. Check if a patient with the given email already exists
-    const existingPatient = await pool.query('SELECT * FROM patients WHERE email = $1', [email]);
+    const existingPatient = await pool.query(
+      'SELECT * FROM patients WHERE email = $1',
+      [email]
+    );
     if (existingPatient.rows.length > 0) {
-      res.status(409).json({ message: 'A patient with this email already exists.' });
+      res
+        .status(409)
+        .json({ message: 'A patient with this email already exists.' });
       return;
     }
 
@@ -51,7 +59,6 @@ export const registerPatient = async (req: Request, res: Response): Promise<void
       message: 'Patient registered successfully!',
       patient: newPatient,
     });
-
   } catch (err) {
     // Generic error handler for database issues or other unexpected errors
     console.error('Error in registerPatient controller:', err);

@@ -1,6 +1,5 @@
 import nodemailer from 'nodemailer';
 
-
 const transporter = nodemailer.createTransport({
   host: process.env.MAIL_HOST,
   port: Number(process.env.MAIL_PORT),
@@ -16,7 +15,10 @@ const transporter = nodemailer.createTransport({
  * @param patientName - The full name of the patient.
  * @param patientEmail - The email address of the patient.
  */
-export const sendRegistrationConfirmation = async (patientName: string, patientEmail: string): Promise<void> => {
+export const sendRegistrationConfirmation = async (
+  patientName: string,
+  patientEmail: string
+): Promise<void> => {
   const mailOptions = {
     from: process.env.MAIL_FROM,
     to: patientEmail,
