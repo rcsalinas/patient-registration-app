@@ -2,7 +2,6 @@
 import { patientSchema } from '../validation/patientSchema';
 
 describe('Patient Validation Schema', () => {
-
   // Test for a valid patient payload
   it('should validate a correct patient payload', () => {
     const validPatient = {
@@ -25,9 +24,11 @@ describe('Patient Validation Schema', () => {
     };
     const { error } = patientSchema.validate(invalidPatient);
     expect(error).toBeDefined();
-    expect(error?.details[0].message).toBe('Email address must be a @gmail.com address.');
+    expect(error?.details[0].message).toBe(
+      'Email address must be a @gmail.com address.'
+    );
   });
-  
+
   // Test for a full name with numbers
   it('should return an error if full name contains numbers', () => {
     const invalidPatient = {
@@ -38,6 +39,8 @@ describe('Patient Validation Schema', () => {
     };
     const { error } = patientSchema.validate(invalidPatient);
     expect(error).toBeDefined();
-    expect(error?.details[0].message).toBe('"Full name" can only contain letters and spaces.');
+    expect(error?.details[0].message).toBe(
+      '"Full name" can only contain letters and spaces.'
+    );
   });
 });

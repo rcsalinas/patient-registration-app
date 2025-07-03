@@ -13,17 +13,15 @@ app.use(express.json());
 // Serve static files from the 'public' directory (for accessing uploaded images)
 app.use('/public', express.static('public'));
 
-
 // --- Routes ---
 app.use('/api/patients', patientRoutes);
 
 app.get('/health', (req: Request, res: Response) => {
-    res.send('Backend server is healthy and running!');
+  res.send('Backend server is healthy and running!');
 });
 
-
 export const initializeDatabase = async () => {
-    const createTableQuery = `
+  const createTableQuery = `
     CREATE TABLE patients (
         id SERIAL PRIMARY KEY,
         full_name VARCHAR(255) NOT NULL,
@@ -34,13 +32,12 @@ export const initializeDatabase = async () => {
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
     `;
-    try {
-        await pool.query(createTableQuery);
-    } catch (error) {
-        console.error('Error creating patients table:', error);
-    }
+  try {
+    await pool.query(createTableQuery);
+  } catch (error) {
+    console.error('Error creating patients table:', error);
+  }
 };
-
 
 // Start the server only if not in a test environment
 if (process.env.NODE_ENV !== 'test') {

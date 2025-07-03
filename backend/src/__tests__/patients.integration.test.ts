@@ -32,23 +32,18 @@ jest.mock('../middleware/upload', () => ({
   },
 }));
 
-
 describe('POST /api/patients', () => {
-
   beforeEach(async () => {
     await initializeDatabase();
   });
 
-
   it('should register a new patient successfully', async () => {
-    const response = await request(app)
-      .post('/api/patients')
-      .send({
-        fullName: 'Mock User',
-        email: 'mock.user@gmail.com',
-        phoneCountryCode: '+1',
-        phoneNumber: '1234567890',
-      });
+    const response = await request(app).post('/api/patients').send({
+      fullName: 'Mock User',
+      email: 'mock.user@gmail.com',
+      phoneCountryCode: '+1',
+      phoneNumber: '1234567890',
+    });
 
     expect(response.status).toBe(201);
     expect(response.body.message).toBe('Patient registered successfully!');
@@ -69,8 +64,10 @@ describe('POST /api/patients', () => {
       phoneCountryCode: '+44',
       phoneNumber: '4445556666',
     });
-      
+
     expect(response.status).toBe(409);
-    expect(response.body.message).toBe('A patient with this email already exists.');
+    expect(response.body.message).toBe(
+      'A patient with this email already exists.'
+    );
   });
 });
