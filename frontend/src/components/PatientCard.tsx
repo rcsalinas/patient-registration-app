@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Patient } from '../types/patient';
+import { type Patient } from '../types/patient';
 import styles from './PatientCard.module.css';
 
 interface PatientCardProps {
@@ -8,6 +8,7 @@ interface PatientCardProps {
 
 const PatientCard = ({ patient }: PatientCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
   const backendUrl = 'http://localhost:3001';
 
   return (
@@ -20,6 +21,7 @@ const PatientCard = ({ patient }: PatientCardProps) => {
         />
         <h3 className={styles.fullName}>{patient.full_name}</h3>
       </div>
+
       {isExpanded && (
         <div className={styles.cardBody}>
           <p>
