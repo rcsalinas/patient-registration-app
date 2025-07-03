@@ -17,8 +17,8 @@ module.exports = [
     },
     rules: {
       ...tsPlugin.configs.recommended.rules,
-      ...eslintConfigPrettier.rules, // <-- Add Prettier rules here
-      // your custom rules here
+      ...eslintConfigPrettier.rules,
+      
     },
   },
 ];
