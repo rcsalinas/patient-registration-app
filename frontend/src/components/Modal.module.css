@@ -19,6 +19,9 @@
   max-height: 90vh;
   overflow-y: auto;
   animation: slideIn 0.3s ease;
+  padding: 2rem; /* <-- Add padding */
+  width: 100%;
+  max-width: 550px;
 }
 
 .closeButton {
