@@ -1,29 +1,30 @@
+// src/index.ts
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express, { Request, Response } from 'express';
 import pool from './db';
 import patientRoutes from './routes/patientRoutes';
-import dotenv from 'dotenv';
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
 // --- Middleware ---
-dotenv.config();
 app.use(express.json());
 // Serve static files from the 'public' directory (for accessing uploaded images)
 app.use('/public', express.static('public'));
 
-// --- Routes ---
-app.use('/api/patients', patientRoutes); // Use the patient routes for this path
 
-// A simple health-check route
+// --- Routes ---
+app.use('/api/patients', patientRoutes);
+
 app.get('/health', (req: Request, res: Response) => {
-  res.send('Backend server is healthy and running!');
+    res.send('Backend server is healthy and running!');
 });
 
-// Function to create the patients table if it doesn't exist
-const initializeDatabase = async () => {
-  const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS patients (
+
+export const initializeDatabase = async () => {
+    const createTableQuery = `
+    CREATE TABLE patients (
         id SERIAL PRIMARY KEY,
         full_name VARCHAR(255) NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
@@ -33,17 +34,21 @@ const initializeDatabase = async () => {
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
     `;
-  try {
-    await pool.query(createTableQuery);
-    console.log('Table "patients" is ready.');
-  } catch (error) {
-    console.error('Error creating patients table:', error);
-    process.exit(1); // Exit if DB initialization fails
-  }
+    try {
+        await pool.query(createTableQuery);
+    } catch (error) {
+        // test handles the error.
+    }
 };
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-  initializeDatabase();
-});
+
+// Start the server only if not in a test environment
+if (process.env.NODE_ENV !== 'test') {
+  const PORT = process.env.PORT || 3001;
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+    initializeDatabase();
+  });
+}
+
+export default app;

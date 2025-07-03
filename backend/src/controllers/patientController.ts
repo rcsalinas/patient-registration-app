@@ -50,8 +50,7 @@ export const registerPatient = async (
 
     const newPatient = newPatientResult.rows[0];
 
-    // 5. Send confirmation email asynchronously (fire-and-forget)
-    // The API responds to the user immediately while the email sends in the background.
+    // 5. Send confirmation email 
     sendRegistrationConfirmation(newPatient.full_name, newPatient.email);
 
     // 6. Send a success response with the created patient data
