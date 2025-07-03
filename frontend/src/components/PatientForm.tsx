@@ -7,7 +7,11 @@ import styles from './PatientForm.module.css';
 import Swal from 'sweetalert2';
 import { AxiosError } from 'axios';
 
-const PatientForm = () => {
+interface PatientFormProps {
+  onSuccess: () => void;
+}
+
+const PatientForm = ({ onSuccess }: PatientFormProps) => {
   const dragAndDropRef = useRef<DragAndDropInputRef>(null);
 
   const formik = useFormik<PatientFormValues>({
@@ -23,6 +27,8 @@ const PatientForm = () => {
       try {
         setSubmitting(true);
         await createPatient(values);
+
+        onSuccess();
 
         Swal.fire({
           title: 'Success!',

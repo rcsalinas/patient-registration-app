@@ -1,31 +1,14 @@
-import { useEffect, useState } from 'react';
-import type { Patient } from '../types/patient';
-import { getPatients } from '../api/patientService';
+import { type Patient } from '../types/patient';
 import PatientCard from './PatientCard';
 import styles from './PatientList.module.css';
 
-const PatientList = () => {
-  const [patients, setPatients] = useState<Patient[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+interface PatientListProps {
+  patients: Patient[];
+  isLoading: boolean;
+  error: string | null;
+}
 
-  useEffect(() => {
-    const fetchPatients = async () => {
-      try {
-        setIsLoading(true);
-        const data = await getPatients();
-        setPatients(data);
-      } catch (err) {
-        setError('Failed to fetch patients. Please try again later.');
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchPatients();
-  }, []);
-
+const PatientList = ({ patients, isLoading, error }: PatientListProps) => {
   if (isLoading) {
     return <div className={styles.stateMessage}>Loading patients...</div>;
   }
