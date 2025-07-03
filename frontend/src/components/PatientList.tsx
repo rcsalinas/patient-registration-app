@@ -37,7 +37,9 @@ const PatientList = () => {
   return (
     <div className={styles.list}>
       {patients.length === 0 ? (
-        <div className={styles.stateMessage}>No patients found. Click "Add Patient" to get started!</div>
+        <div className={styles.stateMessage}>
+          No patients found. Click "Add Patient" to get started!
+        </div>
       ) : (
         patients.map((patient) => (
           <PatientCard key={patient.id} patient={patient} />

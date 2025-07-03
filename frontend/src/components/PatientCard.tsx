@@ -11,22 +11,24 @@ const PatientCard = ({ patient }: PatientCardProps) => {
   const backendUrl = 'http://localhost:3001';
 
   return (
-    <div 
-      className={styles.card} 
-      onClick={() => setIsExpanded(!isExpanded)}
-    >
+    <div className={styles.card} onClick={() => setIsExpanded(!isExpanded)}>
       <div className={styles.cardHeader}>
-        <img 
-          src={`${backendUrl}/${patient.document_photo_url}`} 
-          alt={`${patient.full_name}'s document`} 
+        <img
+          src={`${backendUrl}/${patient.document_photo_url}`}
+          alt={`${patient.full_name}'s document`}
           className={styles.documentPhoto}
         />
         <h3 className={styles.fullName}>{patient.full_name}</h3>
       </div>
       {isExpanded && (
         <div className={styles.cardBody}>
-          <p><strong>Email:</strong> {patient.email}</p>
-          <p><strong>Phone:</strong> {`${patient.phone_country_code} ${patient.phone_number}`}</p>
+          <p>
+            <strong>Email:</strong> {patient.email}
+          </p>
+          <p>
+            <strong>Phone:</strong>{' '}
+            {`${patient.phone_country_code} ${patient.phone_number}`}
+          </p>
         </div>
       )}
     </div>
