@@ -3,6 +3,7 @@ import request from 'supertest';
 import app, { initializeDatabase } from '../index';
 import { Request, Response, NextFunction } from 'express';
 import { Readable } from 'stream';
+import pool from '../db';
 
 // --- Email Service Mock ---
 jest.mock('../services/emailService', () => ({
@@ -35,6 +36,7 @@ jest.mock('../middleware/upload', () => ({
 describe('POST /api/patients', () => {
   beforeEach(async () => {
     await initializeDatabase();
+    await pool.query('TRUNCATE TABLE patients RESTART IDENTITY');
   });
 
   it('should register a new patient successfully', async () => {
@@ -69,5 +71,23 @@ describe('POST /api/patients', () => {
     expect(response.body.message).toBe(
       'A patient with this email already exists.'
     );
+  });
+
+  it('should fetch a list of all patients', async () => {
+    await request(app).post('/api/patients').send({
+      fullName: 'Jane Doe',
+      email: 'jane.doe@gmail.com',
+      phoneCountryCode: '+44',
+      phoneNumber: '123456789',
+    });
+
+    const response = await request(app).get('/api/patients');
+
+    console.log('Response body:', response.body);
+
+    expect(response.status).toBe(200);
+    expect(Array.isArray(response.body)).toBe(true);
+    expect(response.body.length).toBe(1);
+    expect(response.body[0].email).toBe('jane.doe@gmail.com');
   });
 });

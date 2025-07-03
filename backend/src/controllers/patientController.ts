@@ -64,3 +64,18 @@ export const registerPatient = async (
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+
+export const getAllPatients = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const allPatients = await pool.query(
+      'SELECT * FROM patients ORDER BY created_at DESC'
+    );
+    res.status(200).json(allPatients.rows);
+  } catch (err) {
+    console.error('Error in getAllPatients controller:', err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};

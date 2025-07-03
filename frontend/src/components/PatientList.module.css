@@ -1,0 +1,12 @@
+.list {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.stateMessage {
+  color: #666;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 40px;
+}
