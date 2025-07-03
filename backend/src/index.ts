@@ -37,7 +37,7 @@ export const initializeDatabase = async () => {
     try {
         await pool.query(createTableQuery);
     } catch (error) {
-        // test handles the error.
+        console.error('Error creating patients table:', error);
     }
 };
 

@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
     cb(null, 'public/uploads/');
   },
   filename: function (req, file, cb) {
-    // Create a unique filename to avoid conflicts
+    // Unique filename filter
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
     cb(
       null,
@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
   },
 });
 
-// Define file filter to accept only jpg images
+// Filter for jpg files
 const fileFilter = (
   req: Request,
   file: Express.Multer.File,
