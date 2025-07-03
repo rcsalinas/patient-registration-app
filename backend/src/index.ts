@@ -5,10 +5,11 @@ dotenv.config();
 import express, { Request, Response } from 'express';
 import pool from './db';
 import patientRoutes from './routes/patientRoutes';
-
+import cors from 'cors';
 const app = express();
 
 // --- Middleware ---
+app.use(cors());
 app.use(express.json());
 // Serve static files from the 'public' directory (for accessing uploaded images)
 app.use('/public', express.static('public'));

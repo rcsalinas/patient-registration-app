@@ -12,14 +12,20 @@ export const patientFormSchema = yup.object().shape({
     .email('Must be a valid email.')
     .matches(/@gmail\.com$/, 'Email address must be a @gmail.com address.')
     .required('Email is required.'),
-  phoneCountryCode: yup.string().required('Country code is required.'),
-  phoneNumber: yup.string().required('Phone number is required.'),
+  phoneCountryCode: yup
+    .string()
+    .matches(/^\+[0-9]+$/, 'Must be a valid country code (e.g., +504).')
+    .required('Country code is required.'),
+  phoneNumber: yup
+    .string()
+    .matches(/^[0-9]+$/, 'Phone number must only contain digits.')
+    .required('Phone number is required.'),
   documentPhoto: yup
     .mixed<File>()
     .required('A document photo is required.')
     .test(
       'fileFormat',
       'Only .jpg images are accepted.',
-      (value) => value && SUPPORTED_FORMATS.includes(value.type)
+      (value) => !!value && SUPPORTED_FORMATS.includes(value.type)
     ),
 });
