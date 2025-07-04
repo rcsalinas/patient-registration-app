@@ -1,6 +1,14 @@
-version: '3.8'
+version: "3.8"
 
 services:
+  # Frontend Service (React App with Nginx)
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80" # Map host port 5173 to container port 80
+    depends_on:
+      - backend
+
   # Backend Service (Our NodeJS App)
   backend:
     build: ./backend # Specifies to build the image from the ./backend/Dockerfile

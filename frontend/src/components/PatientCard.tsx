@@ -9,8 +9,6 @@ interface PatientCardProps {
 const PatientCard = ({ patient }: PatientCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const backendUrl = 'http://localhost:3001';
-
   return (
     <div
       className={styles.card}
@@ -19,7 +17,7 @@ const PatientCard = ({ patient }: PatientCardProps) => {
     >
       <div className={styles.cardHeader}>
         <img
-          src={`${backendUrl}/${patient.document_photo_url}`}
+          src={`/${patient.document_photo_url}`}
           alt={`${patient.full_name}'s document`}
           className={styles.documentPhoto}
         />

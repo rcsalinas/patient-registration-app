@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { Patient } from '../types/patient';
 
-const API_URL = 'http://localhost:3001/api/patients';
+const API_URL = '/api/patients';
 
 export interface PatientFormValues {
   fullName: string;
