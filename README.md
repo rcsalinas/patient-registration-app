@@ -62,7 +62,7 @@ You must have **Docker Desktop** installed and running on your machine.
 Clone this project to your local machine.
 
 ```sh
-git clone <your-repo-url>
+git clone https://github.com/rcsalinas/patient-registration-app.git
 cd patient-registration-app
 ```
 
