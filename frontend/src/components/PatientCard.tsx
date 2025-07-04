@@ -12,7 +12,11 @@ const PatientCard = ({ patient }: PatientCardProps) => {
   const backendUrl = 'http://localhost:3001';
 
   return (
-    <div className={styles.card} onClick={() => setIsExpanded(!isExpanded)}>
+    <div
+      className={styles.card}
+      onClick={() => setIsExpanded(!isExpanded)}
+      data-testid="patient-card"
+    >
       <div className={styles.cardHeader}>
         <img
           src={`${backendUrl}/${patient.document_photo_url}`}
